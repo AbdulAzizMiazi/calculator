@@ -104,7 +104,9 @@
             document.getElementById("current-num").style.color = "rgb(235, 151, 16)";
             document.getElementById("history-num").innerText = (document.getElementById("history-num").innerText)+ " " + "" + getCurrentNum;
             document.getElementById("current-num").innerText = result.toFixed(3);
-            document.getElementById("c").style.disabled = true;
+            document.getElementById("c").setAttribute('disabled','true'); 
+            document.getElementById("c").style.backgroundColor ="grey";
+            document.getElementById("c").style.color ="black";
         })  
 
         document.getElementById("ac").addEventListener("click", function(){
@@ -115,7 +117,7 @@
             var currentStr = document.getElementById("current-num").innerText;
             var newCurrentStr = currentStr.slice(0, -1);
             document.getElementById("current-num").innerText = newCurrentStr;
-            document.getElementById("c").style.disabled = true;
+            document.getElementById("c").setAttribute('disabled','true'); 
         })
         
         
