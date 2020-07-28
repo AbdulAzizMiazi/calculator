@@ -20,76 +20,105 @@
         </div>
         <div id="calculator-body">
             <div id="raw-one" class="raws">
-                <button id="ac">AC</button>
-                <button id="c">C</button>
-                <button id="division">&divide;</button>
+                <button id="ac"> AC </button>
+                <button id="c"> C </button>
+                <button id="division" onclick="operatorClicker(' /')" > &divide; </button>
             </div>
             <div id="raw-two" class="raws">
-                <button id="seven" onclick="clicker('seven')">7</button>
-                <button id="eight" onclick="clicker('eight')">8</button>
-                <button id="nine" onclick="clicker('nine')">9</button>
-                <button>&times;</button>
+                <button id="seven" onclick="numberClicker('seven')"> 7 </button>
+                <button id="eight" onclick="numberClicker('eight')"> 8 </button>
+                <button id="nine" onclick="numberClicker('nine')"> 9 </button>
+                <button onclick="operatorClicker(' *')"> &times; </button>
             </div>
             <div id="raw-3" class="raws">
-                <button id="four" onclick="clicker('four')">4</button>
-                <button id="five" onclick="clicker('five')">5</button>
-                <button id="six" onclick="clicker('six')">6</button>
-                <button>-</button>
+                <button id="four" onclick="numberClicker('four')"> 4 </button>
+                <button id="five" onclick="numberClicker('five')"> 5 </button>
+                <button id="six" onclick="numberClicker('six')"> 6 </button>
+                <button onclick="operatorClicker(' -')"> - </button>
             </div>
             <div id="raw-three" class="raws">
-                <button id="one" onclick="clicker('one')">1</button>
-                <button id="two" onclick="clicker('two')">2</button>
-                <button id="three" onclick="clicker('three')">3</button>
-                <button>+</button>
+                <button id="one" onclick="numberClicker('one')"> 1 </button>
+                <button id="two" onclick="numberClicker('two')"> 2 </button>
+                <button id="three" onclick="numberClicker('three')"> 3 </button>
+                <button onclick="operatorClicker(' +')"> + </button>
             </div>
             <div id="raw-four" class="raws">
-                <button id="zero" onclick="clicker('zero')">0</button>
-                <button id="decimal" onclick="clicker('decimal')">.</button>
-                <button id="equal">=</button>
+                <button id="zero" onclick="numberClicker('zero')"> 0 </button>
+                <button id="decimal" onclick="numberClicker('decimal')"> . </button>
+                <button id="equal"> = </button>
             </div>
+            
         </div>
 
     </main>
-
-    <script src="script.js"></script>
 
 
 
     <script>
         var numbers = [];
-        function clicker(id) {
+
+        function numberClicker(id) {
             var buttonValue = document.getElementById(id).innerText;
-            console.log(buttonValue);
             var previousNum = document.getElementById("current-num").innerText;
             document.getElementById("current-num").innerText = previousNum + buttonValue;
         }
-        // var currentNumb = parseFloat(document.getElementById("current-num").innerText).toFixed(5);
-        document.getElementById("division").addEventListener("click", function(){
+        
+        function operatorClicker(operator) {
             var getCurrentNum = parseFloat(document.getElementById("current-num").innerText);
-            document.getElementById("current-num").innerText = " ";
-            document.getElementById("history-num").innerText = "" + getCurrentNum + " /";
+            document.getElementById("current-num").innerText = "" ;
+            document.getElementById("history-num").innerText = "" + getCurrentNum + operator;
             numbers.push(getCurrentNum);
-        })
+        }
+
         document.getElementById("equal").addEventListener("click", function(){
             var getCurrentNum = parseFloat(document.getElementById("current-num").innerText);
             numbers.push(getCurrentNum);
             var result;
-            var input =  document.getElementById("history-num").innerText
-            if (input.indexOf("/") != -1 ) {
-                for (let i = 0; i < numbers.length -1; i++) {
+            var getHistoryNumber =  document.getElementById("history-num").innerText
+            if (getHistoryNumber.indexOf("/") != -1 ) {
+                for (let i = 0; i < numbers.length - 1; i++) {
                     const element = numbers[i];
-                    result = numbers[i] / numbers[i+1];
-                    console.log(result);
-                    document.getElementById("history-num").innerText = (document.getElementById("history-num").innerText)+ " " + "" + getCurrentNum;
-                    document.getElementById("current-num").innerText = result.toFixed(2);   
+                    result = numbers[i] / numbers[i+1];                     
                 }
             }
-        })
-        document.getElementById("ac").addEventListener("click", function(){
-            document.getElementById("current-num").innerText = " ";
-            document.getElementById("history-num").innerText = " ";
-        })
+            if (getHistoryNumber.indexOf("*") != -1 ) {
+                for (let i = 0; i < numbers.length - 1; i++) {
+                    const element = numbers[i];
+                    result = numbers[i] * numbers[i+1];                     
+                }
+            }
+            if (getHistoryNumber.indexOf("+") != -1 ) {
+                for (let i = 0; i < numbers.length - 1; i++) {
+                    const element = numbers[i];
+                    result = numbers[i] + numbers[i+1];                     
+                }
+            }
+            if (getHistoryNumber.indexOf("-") != -1 ) {
+                for (let i = 0; i < numbers.length - 1; i++) {
+                    const element = numbers[i];
+                    result = numbers[i] - numbers[i+1];                     
+                }
+            }
+            document.getElementById("current-num").style.fontSize = "50px";
+            document.getElementById("current-num").style.marginTop = "35px";
+            document.getElementById("current-num").style.color = "rgb(235, 151, 16)";
+            document.getElementById("history-num").innerText = (document.getElementById("history-num").innerText)+ " " + "" + getCurrentNum;
+            document.getElementById("current-num").innerText = result.toFixed(3);
+            document.getElementById("c").style.disabled = true;
+        })  
 
+        document.getElementById("ac").addEventListener("click", function(){
+            document.getElementById("current-num").innerText = "";
+            document.getElementById("history-num").innerText = "";
+        })
+        document.getElementById("c").addEventListener("click", function(){
+            var currentStr = document.getElementById("current-num").innerText;
+            var newCurrentStr = currentStr.slice(0, -1);
+            document.getElementById("current-num").innerText = newCurrentStr;
+            document.getElementById("c").style.disabled = true;
+        })
+        
+        
     </script>
 </body>
 </html>
